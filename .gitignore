@@ -7,6 +7,6 @@ bin/
 .classpath
 .project
 
-.settings
-.vscode
-.gitlab*
+.settings/
+.vscode/
+.gitlab-ci.yml
