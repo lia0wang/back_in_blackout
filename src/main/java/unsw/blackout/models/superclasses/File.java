@@ -11,7 +11,7 @@ public class File {
     protected Boolean hasTransferCompleted;
     
     /**
-     * Constructor for creating a new file
+     * Constructor
      */
     public File(String fileName, String fileContent, Integer fileSize) {
         this.fileName = fileName;
