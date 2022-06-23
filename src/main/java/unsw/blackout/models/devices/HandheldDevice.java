@@ -3,7 +3,7 @@ package unsw.blackout.models.devices;
 import unsw.blackout.models.superclasses.Device;
 import unsw.utils.Angle;
 
-public class HandheldDevice extends Device {
+final public class HandheldDevice extends Device {
     /*
      * Constructor
      */
