@@ -2,6 +2,10 @@ package unsw.blackout.models.superclasses;
 
 import unsw.utils.Angle;
 import java.util.HashMap;
+import java.util.Map;
+
+import unsw.response.models.EntityInfoResponse;
+import unsw.response.models.FileInfoResponse;
 
 /**
  * Represents a generic entity object superclass for Device and Satellite.
@@ -150,5 +154,18 @@ public class BaseObject {
      */
     public Integer getTotalFileCount() {
         return this.files.size();
+    }
+    
+    /**
+     * Get information about a base object
+     * @return information about a base object
+     */
+    public EntityInfoResponse getInfo() {
+        Map<String, FileInfoResponse> fileInfo = new HashMap<String, FileInfoResponse>();
+        for (File file : this.files.values()) {
+            FileInfoResponse fileInfoResponse = new FileInfoResponse(file.getFileName(), file.getFileContent(), file.getFileSize(), file.getHasTransferCompleted());
+            fileInfo.put(file.getFileName(), fileInfoResponse);
+        }
+        return new EntityInfoResponse(this.uniqueId, this.position, this.height, this.getClass().getSimpleName(), fileInfo);
     }
 }

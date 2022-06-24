@@ -2,45 +2,91 @@ package unsw.blackout;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import unsw.response.models.EntityInfoResponse;
+import java.util.HashMap;
 import unsw.utils.Angle;
 
-public class BlackoutController {
+import unsw.blackout.models.devices.*;
+import unsw.blackout.models.superclasses.*;
+import unsw.response.models.EntityInfoResponse;
+import unsw.blackout.models.satellites.RelaySatellite;
+import unsw.blackout.models.satellites.storage_satellite.*;
 
+public class BlackoutController {
+    
+    // Entities is a HashMap of BaseObject objects - Device, Satellite
+    private HashMap<String, BaseObject> baseObjects = new HashMap<String, BaseObject>();
+    
     public void createDevice(String deviceId, String type, Angle position) {
-        // TODO: Task 1a)
+        switch (type) {
+            case "LaptopDevice":
+                baseObjects.put(deviceId, new LaptopDevice(deviceId, position));
+                break;
+            case "HandheldDevice":
+                baseObjects.put(deviceId, new HandheldDevice(deviceId, position));
+                break;
+            case "DesktopDevice":
+                baseObjects.put(deviceId, new DesktopDevice(deviceId, position));
+                break;
+            default:
+                break;
+        }
     }
 
     public void removeDevice(String deviceId) {
-        // TODO: Task 1b)
+        baseObjects.remove(deviceId);
     }
 
     public void createSatellite(String satelliteId, String type, double height, Angle position) {
-        // TODO: Task 1c)
+        switch (type) {
+            case "StandardSatellite":
+                baseObjects.put(satelliteId, new StandardSatellite(satelliteId, position, height));
+                break;
+            case "RelaySatellite":
+                baseObjects.put(satelliteId, new RelaySatellite(satelliteId, position, height));
+                break;
+            case "TeleportingSatellite":
+                baseObjects.put(satelliteId, new TeleportingSatellite(satelliteId, position, height));
+                break;
+            default:
+                break;
+        }
     }
 
     public void removeSatellite(String satelliteId) {
-        // TODO: Task 1d)
+        baseObjects.remove(satelliteId);
     }
 
     public List<String> listDeviceIds() {
-        // TODO: Task 1e)
-        return new ArrayList<>();
+        List<String> deviceIds = new ArrayList<String>();
+        for (String deviceId : baseObjects.keySet()) {
+            if (baseObjects.get(deviceId) instanceof Device) {
+                deviceIds.add(deviceId);
+            }
+        }
+        return deviceIds;
     }
 
     public List<String> listSatelliteIds() {
-        // TODO: Task 1f)
-        return new ArrayList<>();
+        List<String> satelliteIds = new ArrayList<String>();
+        for (String satelliteId : baseObjects.keySet()) {
+            if (baseObjects.get(satelliteId) instanceof Satellite) {
+                satelliteIds.add(satelliteId);
+            }
+        }
+        return satelliteIds;
     }
 
     public void addFileToDevice(String deviceId, String filename, String content) {
-        // TODO: Task 1g)
+        Device device = (Device) baseObjects.get(deviceId);
+        device.addFile(new File(deviceId, filename, content));
     }
 
     public EntityInfoResponse getInfo(String id) {
-        // TODO: Task 1h)
-        return null;
+        BaseObject baseObject = baseObjects.get(id);
+        if (baseObject == null) {
+            return null;
+        }
+        return baseObject.getInfo();
     }
 
     public void simulate() {
