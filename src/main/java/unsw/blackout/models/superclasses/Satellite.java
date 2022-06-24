@@ -36,4 +36,11 @@ public class Satellite extends BaseObject {
         this.linearVelocity = linearVelocity;
     }
     
+    /**
+     * Move the satellite
+     */
+    public void moveSatellite(Integer min) {
+        Double angleVelocity = this.linearVelocity / this.height;
+        this.position = this.position.add(Angle.fromRadians(angleVelocity * min));
+    }
 }

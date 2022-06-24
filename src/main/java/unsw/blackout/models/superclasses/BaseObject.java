@@ -3,6 +3,7 @@ package unsw.blackout.models.superclasses;
 import unsw.utils.Angle;
 import java.util.HashMap;
 import java.util.Map;
+import unsw.utils.MathsHelper;
 
 import unsw.response.models.EntityInfoResponse;
 import unsw.response.models.FileInfoResponse;
@@ -16,11 +17,11 @@ import unsw.response.models.FileInfoResponse;
  */
  
 public class BaseObject {
-    private String uniqueId;
-    private Double height;
-    private Angle position;
-    private Integer maxRange;
-    private HashMap <String, File> files;
+    protected String uniqueId;
+    protected Double height;
+    protected Angle position;
+    protected Integer maxRange;
+    protected HashMap <String, File> files;
 
     /**
      * Constructor
@@ -167,5 +168,14 @@ public class BaseObject {
             fileInfo.put(file.getFileName(), fileInfoResponse);
         }
         return new EntityInfoResponse(this.uniqueId, this.position, this.height, this.getClass().getSimpleName(), fileInfo);
+    }
+    
+    /**
+     * Check if a base object is within range of another base object
+     * @param baseObject
+     * @return
+     */
+    public Boolean isCommunicable(BaseObject baseObject) {
+        return MathsHelper.getDistance(this.height, this.position, baseObject.height, baseObject.position) <= this.maxRange;
     }
 }

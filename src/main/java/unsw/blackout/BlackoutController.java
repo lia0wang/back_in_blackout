@@ -90,7 +90,11 @@ public class BlackoutController {
     }
 
     public void simulate() {
-        // TODO: Task 2a)
+        for (BaseObject object : baseObjects.values()) {
+            if (object instanceof Satellite) {
+                ((Satellite) object).moveSatellite(1);
+            }
+        }
     }
 
     /**
@@ -104,12 +108,20 @@ public class BlackoutController {
     }
 
     public List<String> communicableEntitiesInRange(String id) {
-        // TODO: Task 2 b)
-        return new ArrayList<>();
+        List<String> communicableEntities = new ArrayList<String>();
+        BaseObject baseObject = baseObjects.get(id);
+        if (baseObject == null) {
+            return communicableEntities;
+        }
+        for (BaseObject otherBaseObject : baseObjects.values()) {
+            if (baseObject.isCommunicable(otherBaseObject)) {
+                communicableEntities.add(otherBaseObject.getUniqueId());
+            }
+        }
+        return communicableEntities;
     }
 
     public void sendFile(String fileName, String fromId, String toId) throws FileTransferException {
-        // TODO: Task 2 c)
     }
 
     public void createDevice(String deviceId, String type, Angle position, boolean isMoving) {
