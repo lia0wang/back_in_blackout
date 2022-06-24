@@ -1,19 +1,28 @@
 package unsw.blackout.models.superclasses;
 
+/**
+ * Represents a File class
+ * 
+ * @note this is the highest level class in the hierarchy of files
+ * 
+ * @author Wang Liao
+ */
+
 public class File {
-    
-    /**
-     * Attributes
-     */
+    protected String toObjectId;
     protected String fileName;
     protected String fileContent;
     protected Integer fileSize;
     protected Boolean hasTransferCompleted;
-    
+
     /**
      * Constructor
+     * @param toObjectId
+     * @param fileName
+     * @param fileContent
      */
-    public File(String fileName, String fileContent, Integer fileSize) {
+    public File(String toObjectId, String fileName, String fileContent) {
+        this.toObjectId = toObjectId;
         this.fileName = fileName;
         this.fileContent = fileContent;
         this.fileSize = fileContent.length();
@@ -21,7 +30,7 @@ public class File {
     }
 
     /**
-     * Getters and Setters
+     * Getters and setters for file name, file content, file size, and transfer completed flag
      */
     public String getFileName() {
         return fileName;
@@ -43,8 +52,8 @@ public class File {
         return fileSize;
     }
     
-    public void setFileSize(Integer fileSize) {
-        this.fileSize = fileSize;
+    public void setFileSize() {
+        this.fileSize = fileContent.length();
     }
     
     public Boolean getHasTransferCompleted() {
@@ -55,11 +64,28 @@ public class File {
         this.hasTransferCompleted = hasTransferCompleted;
     }
     
-    public void addFileContent(String fileContent) {
-        this.fileContent += fileContent;
+    public String getToObjectId() {
+        return toObjectId;
     }
     
-    public boolean isFileComplete() {
-        return this.fileSize == this.fileContent.length();
+    public void setToObjectId(String toObjectId) {
+        this.toObjectId = toObjectId;
+    }
+    
+    /**
+     * Overrides the toString method
+    * @return String
+     */
+    @Override
+    public String toString() {
+        return "File: " + fileName + " " + fileContent + " " + fileSize + " " + hasTransferCompleted;
+    }
+    
+    /**
+     * Extend file content with another string
+     * @param str
+     */
+    public void extendFileContent(String str) {
+        this.fileContent += str;
     }
 }

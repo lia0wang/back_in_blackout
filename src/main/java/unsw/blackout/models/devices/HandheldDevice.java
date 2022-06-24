@@ -3,11 +3,22 @@ package unsw.blackout.models.devices;
 import unsw.blackout.models.superclasses.Device;
 import unsw.utils.Angle;
 
+/**
+ * Represents the Desktop Device class
+ *
+ * @note this is the lowest level class in the hierarchy of devices
+ *
+ * @author Wang Liao
+ */
 final public class HandheldDevice extends Device {
-    /*
+    /**
      * Constructor
+     * @param uniqueId
+     * @param position
+     * @param maxRange
      */
-    public HandheldDevice(String deviceId, Angle position) {
-        super(deviceId, position, 50000.0);
+    final static private Integer MAX_RANGE = 50000;
+    public HandheldDevice(String uniqueId, Angle position) {
+        super(uniqueId, position, MAX_RANGE);
     }
 }
